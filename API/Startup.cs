@@ -20,15 +20,14 @@ namespace API
         private readonly IConfiguration _config;
         public Startup(IConfiguration config)
         {
-            _config = config;           
+            _config = config;
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
-
+            services.AddCors(p => p.AddDefaultPolicy(builder => builder.AllowAnyOrigin()));
             services.AddDbContext<DataContext>(options =>
              {
                  options.UseSqlServer(_config.GetConnectionString("DefaultConn"));
@@ -36,7 +35,9 @@ namespace API
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
+                
             });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,6 +53,8 @@ namespace API
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors();
 
             app.UseAuthorization();
 
