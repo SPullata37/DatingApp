@@ -4,6 +4,10 @@ namespace API.Entities
     {
         public int Id { get; set; }
 
-        public string UserName { get; set; }
+        public string UserName { get; set; } 
+
+        public byte[] PasswordSlat { get; set; } 
+
+        public byte[] PasswordHash { get; set; }
     }
 }
