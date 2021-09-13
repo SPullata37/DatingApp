@@ -13,6 +13,13 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
+using API.Interfaces;
+using API.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using API.Extensions;
+
 namespace API
 {
     public class Startup
@@ -27,7 +34,7 @@ namespace API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddCors(p => p.AddDefaultPolicy(builder => builder.AllowAnyOrigin()));
+            services.AddApplicationSerivce(_config);
             services.AddDbContext<DataContext>(options =>
              {
                  options.UseSqlServer(_config.GetConnectionString("DefaultConn"));
@@ -37,7 +44,7 @@ namespace API
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
                 
             });
-
+            services.AddIdentityService(_config);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,7 +62,7 @@ namespace API
             app.UseRouting();
 
             app.UseCors();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
