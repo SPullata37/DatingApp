@@ -22,7 +22,7 @@ namespace API.Controllers
         }
 
         [HttpGet] 
-        [AllowAnonymous]
+        
         public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
         {
                  

@@ -14,8 +14,7 @@ namespace API.Extensions
 
         public static IServiceCollection AddApplicationSerivce(this IServiceCollection services ,IConfiguration config)
         {
-            services.AddScoped<ITokenService, TokenServices>();
-            services.AddCors(p => p.AddDefaultPolicy(builder => builder.AllowAnyOrigin()));
+
             return services;
         }
     }

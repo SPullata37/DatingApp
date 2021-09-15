@@ -71,7 +71,7 @@ namespace API.Controllers
 
         private async Task<bool> UserExists(string UserName)
         {
-            return await _context.users.AnyAsync(x => x.UserName == UserName.ToLower());
+            return await _context.users.AnyAsync(x => x.UserName.ToLower() == UserName.ToLower());
         }
     }
 }
